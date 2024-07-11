@@ -13,10 +13,9 @@ public class WordCount {
 
     public static void main(String[] args) {
 
-        ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setParallelism(2);
-        DataSet<String> text = env.readTextFile("/path/to/file");
-
+        DataStream<String> text = env.fromSource(null).name("");
         DataSet<Tuple2<String, Integer>> counts =
                 // split up the lines in pairs (2-tuples) containing: (word,1)
                 text.flatMap(new Tokenizer())
