@@ -2,6 +2,7 @@ package wordcount;
 
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.common.functions.ReduceFunction;
+import org.apache.flink.api.common.typeinfo.TypeHint;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.DataSet;
 import org.apache.flink.api.java.ExecutionEnvironment;
@@ -14,6 +15,9 @@ import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.scala.DataStream;
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.scala.WindowedStream;
+import org.apache.flink.streaming.api.windowing.assigners.SlidingEventTimeWindows;
+import org.apache.flink.streaming.api.windowing.assigners.SlidingProcessingTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.util.Collector;
 import scala.collection.Seq;
@@ -44,21 +48,22 @@ public class WordCount {
 
         // 3. 初始化数据
         DataStream<String> source = env.socketTextStream("127.0.0.1", 9999,' ',10000L);
-        source.flatMap(new FlatMapFunction<String, WordWithCount>() {
+        source.flatMap(new FlatMapFunction<String, Tuple2<String, Long>>() {
             @Override
-            public void flatMap(String s, Collector<WordWithCount> collector) throws Exception {
+            public void flatMap(String s, Collector<Tuple2<String, Long>> collector) throws Exception {
                 String[] words = s.split("\\s+");
                 for(String word : words) {
-                    collector.collect(new WordWithCount(word, 1L));
+                    collector.collect(new Tuple2(word, 1L));
                 }
                 //collector.collect(new WordWithCount());
             }
-        }, TypeInformation.of(WordWithCount.class)).keyBy(new KeySelector<WordWithCount, String>() {
+        }, TypeInformation.of(new TypeHint<Tuple2<String, Long>>(){})).keyBy(new KeySelector<Tuple2<String, Long>, String>() {
+
             @Override
-            public String getKey(WordWithCount wordWithCount) throws Exception {
-                return wordWithCount.word;
+            public String getKey(Tuple2<String, Long> stringLongTuple2) throws Exception {
+                return stringLongTuple2.f0;
             }
-        },TypeInformation.of(String.class)).sum("count").print();
+        },TypeInformation.of(String.class)).countWindow(4,1).sum(1).print();
 
         // 5. 打印结果,设置并行度
        // counts.print().setParallelism(1);
