@@ -1,0 +1,16 @@
+package api
+
+import org.apache.flink.streaming.api.scala.{DataStream, createTypeInformation}
+
+object SingStream {
+
+  val ds:DataStream[String] = null;
+
+  val ds1 = ds.map{_.toDouble}
+
+  ds.filter{_.toInt>1}
+
+  ds.flatMap{_.split(" ")}
+
+  ds.flatMap{e=>e.split(" ")}
+}
