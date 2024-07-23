@@ -13,4 +13,7 @@ object SingStream {
   ds.flatMap{_.split(" ")}
 
   ds.flatMap{e=>e.split(" ")}
+
+  ds.keyBy("name").reduce{(a1,a2)=>a1+a2}
+
 }
