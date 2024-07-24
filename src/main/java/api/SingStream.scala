@@ -22,4 +22,10 @@ object SingStream {
 
   ds1.union(ds2)
   ds.connect(ds1)
+
+
+  ds
+
+
+
 }
