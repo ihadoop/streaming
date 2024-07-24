@@ -8,6 +8,7 @@ object SingStream {
    val  env = StreamExecutionEnvironment.getExecutionEnvironment
   env.setParallelism(2)
 
+
   val ds1 = ds.map{_.toDouble}
    val ds2 = ds.map{_.toDouble}
   ds2.setParallelism(2)
@@ -29,7 +30,11 @@ object SingStream {
   ds.rebalance
   ds.broadcast
   ds.global
-  ds.partitionCustom()
+
+
+
+  //
+  env.registerType(Object.class)
 
 
 
