@@ -1,11 +1,12 @@
 package api
 
-import org.apache.flink.streaming.api.scala.{DataStream, createTypeInformation}
+import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment, createTypeInformation}
 
 object SingStream {
 
   val ds:DataStream[String] = null;
-
+   val  env = StreamExecutionEnvironment.getExecutionEnvironment
+  env.setParallelism(2)
   val ds1 = ds.map{_.toDouble}
    val ds2 = ds.map{_.toDouble}
   ds.filter{_.toInt>1}
