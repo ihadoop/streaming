@@ -24,7 +24,12 @@ object SingStream {
   ds.connect(ds1)
 
 
-  ds
+  ds.shuffle
+  ds.rescale
+  ds.rebalance
+  ds.broadcast
+  ds.global
+  ds.partitionCustom()
 
 
 
