@@ -7,8 +7,11 @@ object SingStream {
   val ds:DataStream[String] = null;
    val  env = StreamExecutionEnvironment.getExecutionEnvironment
   env.setParallelism(2)
+
   val ds1 = ds.map{_.toDouble}
    val ds2 = ds.map{_.toDouble}
+  ds2.setParallelism(2)
+
   ds.filter{_.toInt>1}
 
   ds.flatMap{_.split(" ")}
