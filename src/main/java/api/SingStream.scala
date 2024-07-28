@@ -1,6 +1,7 @@
 package api
 
 import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment, createTypeInformation}
+import org.apache.flink.util.Collector
 
 object SingStream {
 
@@ -34,8 +35,11 @@ object SingStream {
 
 
   //
-  env.registerType(Object.class)
 
+  ds.flatMap{(values:String,out:Collector[String])=>{
+        values.split(" ").foreach(out.collect)
+
+  }}
 
 
 }
