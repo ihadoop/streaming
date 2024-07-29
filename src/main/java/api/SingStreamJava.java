@@ -15,7 +15,7 @@ public class SingStreamJava {
 
 
         StreamExecutionEnvironment executionEnvironment;
-        executionEnvironment.addSource(null).returns(new GenericRecord(null));
+        //executionEnvironment.addSource(null).returns(new GenericRecord(null));
         DataStream<String> source = null;
 
 
