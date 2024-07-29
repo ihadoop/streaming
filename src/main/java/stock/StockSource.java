@@ -6,6 +6,7 @@ public class StockSource implements SourceFunction<StockPrice> {
     @Override
     public void run(SourceContext<StockPrice> sourceContext) throws Exception {
 
+        sourceContext.collect(StockPrice.gen());
     }
 
     @Override
