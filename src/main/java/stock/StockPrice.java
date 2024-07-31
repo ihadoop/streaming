@@ -1,21 +1,28 @@
 package stock;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 
-@Builder
-@Getter
+@Data
 public class StockPrice {
 
-    private String dateId;
     private String code;
-    private Double price;
-    private int number;
+    private Long price;
+    private Long number;
     private Long time;
 
 
-    public static StockPrice gen(){
+    public StockPrice(){
 
-        return StockPrice.builder().build();
+
+    }
+    public static StockPrice gen(){
+        StockPrice stockPrice = new StockPrice();
+        stockPrice.setPrice(System.currentTimeMillis());
+        stockPrice.setTime(System.currentTimeMillis());
+        stockPrice.setCode("A");
+        stockPrice.setNumber(System.currentTimeMillis());
+        return stockPrice;
     }
 }
