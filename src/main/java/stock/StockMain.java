@@ -25,7 +25,7 @@ public class StockMain {
             public String getKey(StockPrice value) throws Exception {
                 return value.getCode();
             }
-        }).max("price").print();
+        }).min("price").print();
 
 
 
