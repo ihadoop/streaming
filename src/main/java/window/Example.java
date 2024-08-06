@@ -32,7 +32,7 @@ public class Example {
         dataStream.keyBy(0).window(SlidingEventTimeWindows.of(Time.minutes(10),Time.seconds(1)));
         //deal with
         WindowedStream<Object,Object, TimeWindow> windowedStream = null;
-
+        //windowedStream.reduce
         windowedStream.reduce(new ReduceFunction<Object>() {
             @Override
             public Object reduce(Object value1, Object value2) throws Exception {
