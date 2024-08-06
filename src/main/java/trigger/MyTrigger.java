@@ -10,6 +10,7 @@ public class MyTrigger extends Trigger<StockPrice, TimeWindow> {
 
     @Override
     public TriggerResult onElement(StockPrice element, long timestamp, TimeWindow window, TriggerContext ctx) throws Exception {
+        //ctx.getPartitionedState()
         return null;
     }
 
