@@ -68,7 +68,6 @@ public class Example {
         windowedStream.process(new ProcessWindowFunction<Object, Object, Object, TimeWindow>() {
             @Override
             public void process(Object o, ProcessWindowFunction<Object, Object, Object, TimeWindow>.Context context, Iterable<Object> iterable, Collector<Object> collector) throws Exception {
-
             }
         });
         windowedStream.evictor(new TimeEvictor(10));
