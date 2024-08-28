@@ -6,6 +6,7 @@ import org.apache.flink.api.common.functions.ReduceFunction;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.WindowedStream;
+import org.apache.flink.streaming.api.functions.co.ProcessJoinFunction;
 import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.assigners.SlidingEventTimeWindows;
@@ -86,5 +87,11 @@ public class Example {
             }
         });
 
+        DataStream<String> join = input1.keyBy(0).intervalJoin(input2.keyBy(0)).between(Time.seconds(-5),Time.seconds(5)).upperBoundExclusive().lowerBoundExclusive().process(new ProcessJoinFunction<Tuple2<String, Integer>, Object, String>() {
+            @Override
+            public void processElement(Tuple2<String, Integer> left, Object right, ProcessJoinFunction<Tuple2<String, Integer>, Object, String>.Context ctx, Collector<String> out) throws Exception {
+
+            }
+        });
     }
 }
