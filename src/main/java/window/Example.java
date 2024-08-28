@@ -73,5 +73,10 @@ public class Example {
         windowedStream.evictor(new TimeEvictor(10));
         //trigger
 
+        //join
+
+
+
+
     }
 }
