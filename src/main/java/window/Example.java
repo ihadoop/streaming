@@ -1,7 +1,9 @@
 package window;
 
 import org.apache.flink.api.common.functions.AggregateFunction;
+import org.apache.flink.api.common.functions.JoinFunction;
 import org.apache.flink.api.common.functions.ReduceFunction;
+import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.datastream.WindowedStream;
 import org.apache.flink.streaming.api.functions.windowing.ProcessWindowFunction;
@@ -74,9 +76,15 @@ public class Example {
         //trigger
 
         //join
+        DataStream<Tuple2<String,Integer>> input1 = null;
+        DataStream<Tuple2<String,Integer>> input2 = null;
 
-
-
+        DataStream<String> joined = input1.join(input2).where(s->s.f0).equalTo(s->s.f0).window(TumblingProcessingTimeWindows.of(Time.minutes(1))).apply(new JoinFunction<Tuple2<String, Integer>, Tuple2<String, Integer>, String>() {
+            @Override
+            public String join(Tuple2<String, Integer> first, Tuple2<String, Integer> second) throws Exception {
+                return null;
+            }
+        });
 
     }
 }
