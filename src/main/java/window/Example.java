@@ -87,6 +87,7 @@ public class Example {
             }
         });
 
+
         DataStream<String> join = input1.keyBy(0).intervalJoin(input2.keyBy(0)).between(Time.seconds(-5),Time.seconds(5)).upperBoundExclusive().lowerBoundExclusive().process(new ProcessJoinFunction<Tuple2<String, Integer>, Object, String>() {
             @Override
             public void processElement(Tuple2<String, Integer> left, Object right, ProcessJoinFunction<Tuple2<String, Integer>, Object, String>.Context ctx, Collector<String> out) throws Exception {
